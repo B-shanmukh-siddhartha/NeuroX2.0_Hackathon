@@ -6,7 +6,9 @@ def query_ollama(prompt):
         ["ollama", "run", "llama3.2:1b"],
         input=prompt,
         text=True,
-        capture_output=True
+        capture_output=True,
+        encoding="utf-8",
+        errors="ignore"
     )
 
     return result.stdout

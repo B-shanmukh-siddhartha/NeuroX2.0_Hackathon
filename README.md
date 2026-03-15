@@ -1,113 +1,98 @@
-# Agentforce AI Sales Assistant
-### Intelligent CRM Automation using Salesforce Agentforce
+# AI Sales Assistant using Salesforce and Python
 
 ## Overview
 
-Sales teams often spend significant time searching through CRM records, emails, and opportunity histories before responding to customers. This manual process slows down decision-making, leads to delayed responses, and sometimes results in missed sales opportunities.
+This project implements an **AI-powered Sales Assistant** that analyzes CRM sales data and provides intelligent insights for sales representatives.
 
-This project introduces an **Agentforce-powered AI Sales Assistant integrated with Salesforce CRM**. The assistant automatically analyzes CRM data, summarizes account history, predicts next best actions, generates personalized email responses, and creates sales proposals.
+The assistant retrieves account and opportunity information, analyzes the sales pipeline, and generates actionable recommendations such as opportunity summaries, risk levels, follow-up emails, and proposal outlines.
 
-By transforming raw CRM data into intelligent insights, the system enables sales representatives to focus more on **closing deals instead of navigating data**.
-
----
-
-# Problem Statement
-
-In enterprise sales environments, CRM platforms store large amounts of customer data across multiple objects such as accounts, contacts, opportunities, and activities. However:
-
-- Sales representatives must manually navigate through multiple records.
-- Important insights are hidden within large datasets.
-- Response times to customer queries become slow.
-- Opportunities may be missed due to delayed follow-ups.
-
-This creates a need for an **AI-driven assistant that can analyze CRM data instantly and provide actionable insights to sales teams**.
+The system is built using **Python, Salesforce CRM APIs, and an AI language model (Ollama)**.
 
 ---
 
-# Proposed Solution
+# Project Workflow
 
-The **Agentforce AI Sales Assistant** acts as an intelligent layer within Salesforce CRM that automatically analyzes customer and opportunity data.
-
-The system will:
-
-- Summarize account history instantly
-- Analyze opportunity stages and deal progress
-- Predict the next best action for sales representatives
-- Generate personalized email responses
-- Automatically create customized sales proposals
-
-This allows sales teams to make faster and more informed decisions.
+1. The user asks a question about a customer or opportunity.
+2. The system retrieves account and opportunity data.
+3. The assistant identifies the relevant account mentioned in the prompt.
+4. Account and opportunity data are added to an AI prompt.
+5. The AI model analyzes the data.
+6. The system returns insights and recommendations for the sales representative.
 
 ---
 
-# Key Features
-
-## 1. Account Intelligence
-The AI assistant analyzes CRM records related to a customer account and generates a concise summary including previous interactions, contacts, and opportunities.
-
-## 2. Opportunity Analysis
-The system evaluates opportunity stages and deal progress to provide insights into potential deal success.
-
-## 3. Next Best Action Recommendation
-Based on opportunity status and interaction history, the AI assistant suggests actions such as follow-up meetings, proposal sharing, or customer engagement strategies.
-
-## 4. AI Email Generator
-The assistant automatically drafts personalized email responses using CRM context and opportunity information.
-
-## 5. Automated Sales Proposal Generator
-The system generates customized sales proposals containing product information, pricing, and customer requirements.
 
 ---
 
-# System Architecture
+# File Descriptions
 
-The system integrates **Salesforce CRM with Agentforce AI agents** to provide intelligent insights and automation.
+## main.py
 
-### Architecture Components
+This is the **main entry point of the application**.
 
-**Frontend Layer**
-- Salesforce Lightning Interface
-- AI Assistant Panel
+Responsibilities:
 
-**AI Processing Layer**
-- Agentforce AI Agents
-- Natural Language Processing Models
-- Decision Recommendation Engine
-
-**Backend Layer**
-- Salesforce CRM Database
-
-**Integration Layer**
-- Salesforce APIs
-- Apex Services
+- Accepts user input
+- Retrieves relevant account data
+- Builds the AI prompt
+- Sends the prompt to the AI model
+- Displays the AI-generated response
 
 ---
 
-## System Architecture Diagram
+## data_loader.py
 
-```mermaid
-flowchart LR
+This module loads sales datasets used by the AI assistant.
 
-A[Salesforce Lightning Interface] --> B[Agentforce AI Sales Assistant]
+It reads CSV files such as:
 
-B --> C[Salesforce CRM Database]
+- Accounts
+- Sales Pipeline
+- Products
+- Sales Teams
 
-C --> D[Accounts]
-C --> E[Contacts]
-C --> F[Opportunities]
-C --> G[Leads]
-C --> H[Activities & Emails]
+The data is loaded using **Pandas** for structured analysis.
 
-B --> I[AI Processing Engine]
+---
 
-I --> J[Account Summary Generator]
-I --> K[Opportunity Analysis Engine]
-I --> L[Next Best Action Predictor]
-I --> M[Email Generation Module]
-I --> N[Proposal Generation Module]
+## retrieval.py
 
-M --> O[Personalized Email Draft]
-N --> P[Sales Proposal Document]
+This module is responsible for **finding relevant accounts and retrieving context data**.
 
-O --> A
-P --> A
+Functions include:
+
+- Identifying which account the user is referring to
+- Extracting account details
+- Extracting related opportunity information
+
+This data is later passed to the AI model.
+
+---
+
+## prompt_builder.py
+
+This module constructs the **AI prompt** sent to the language model.
+
+The prompt contains:
+
+- Account details
+- Opportunity details
+
+The AI is instructed to generate:
+
+1. Opportunity Summary  
+2. Risk Level  
+3. Recommended Next Best Action  
+4. Follow-up Email  
+5. Proposal Outline
+
+---
+
+## ollama_client.py
+
+This module connects to the **Ollama AI model**.
+
+It sends the generated prompt to the AI model and receives the response.
+
+The model used in this project is:
+

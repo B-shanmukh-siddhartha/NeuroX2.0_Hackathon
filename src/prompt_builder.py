@@ -18,6 +18,7 @@ Analyze the opportunity and provide:
 5. Proposal Outline
 
 Keep the response concise and practical for a sales representative.
-"""
+
+""" 
 
     return prompt
